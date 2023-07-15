@@ -74,7 +74,7 @@ namespace CRUD.Controllers
         {
             var query = @"Update cadastro set
                         nome = @Nome,
-                        email = @Nome
+                        email = @Email
                       where ID = @id"; 
 
             using (var conn = new SqlConnection("Server=DAISY\\SQLEXPRESS; Database=CRUD; User Id=sa; Password=anonimo;"))

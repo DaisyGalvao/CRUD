@@ -38,5 +38,63 @@ namespace CRUD.Controllers
                     }).FirstOrDefault();
             }
         }
+
+        [HttpGet]
+        [Route("GetById/{id}")]
+        public EnderecoModel GetById(int id)
+        {
+            var query = @"select * from endereco where ID = @Id";
+
+            using (var conn = new SqlConnection("Server=DAISY\\SQLEXPRESS; Database=CRUD; User Id=sa; Password=anonimo;"))
+            {
+                conn.Open();
+
+                var resp = conn.Query<EnderecoModel>(query,
+                    new
+                    { Id = id }).FirstOrDefault();
+
+                return resp;
+            }
+        }
+
+        [HttpPut]
+        [Route("Update")]
+        public void Update(EnderecoModel enderecoModel)
+        {
+            var query = @"Update endereco set
+                        rua = @Rua,
+                        numero = @Numero,
+                        cep = @Cep
+                      where ID = @id";
+
+            using (var conn = new SqlConnection("Server=DAISY\\SQLEXPRESS; Database=CRUD; User Id=sa; Password=anonimo;"))
+            {
+                conn.Open();
+
+                conn.Query(query,
+                    new
+                    {
+                        Rua = enderecoModel.rua,
+                        Numero = enderecoModel.numero,
+                        Cep = enderecoModel.cep,
+                        id = enderecoModel.ID
+                    }).FirstOrDefault();
+            }
+        }
+
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public void Delete(int id)
+        {
+            var query = @"delete from endereco where ID = @Id";
+
+            using (var conn = new SqlConnection("Server=DAISY\\SQLEXPRESS; Database=CRUD; User Id=sa; Password=anonimo;"))
+            {
+                conn.Open();
+
+                conn.Query(query, new { Id = id }).FirstOrDefault();
+
+            }
+        }
     }
 }
