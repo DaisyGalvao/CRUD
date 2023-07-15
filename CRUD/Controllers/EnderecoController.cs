@@ -57,6 +57,22 @@ namespace CRUD.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("GetAll")]
+        public List<EnderecoModel> GetAll()
+        {
+            var query = @"select * from endereco";
+
+            using (var conn = new SqlConnection("Server=DAISY\\SQLEXPRESS; Database=CRUD; User Id=sa; Password=anonimo;"))
+            {
+                conn.Open();
+
+                var resp = conn.Query<EnderecoModel>(query).ToList();
+
+                return resp;
+            }
+        }
+
         [HttpPut]
         [Route("Update")]
         public void Update(EnderecoModel enderecoModel)
